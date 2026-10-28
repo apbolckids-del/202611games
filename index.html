@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>孩要來遊戲影片 (2026年11月)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky:#2E86AB;
+    --sky-deep:#1B5E7A;
+    --sun:#F4B400;
+    --grass:#3A9D5D;
+    --grass-pale:#E5F4EB;
+    --coral:#E85D4E;
+    --coral-pale:#FCE7E4;
+    --cream:#FBF7EE;
+    --ink:#1F2A33;
+    --ink-soft:#5A6670;
+    --line:#E4DFD2;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 8% 12%, rgba(244,180,0,0.10), transparent 40%),
+      radial-gradient(circle at 92% 85%, rgba(46,134,171,0.10), transparent 45%),
+      var(--cream);
+    font-family:"Noto Sans TC", sans-serif;
+    color:var(--ink);
+    min-height:100vh;
+  }
+  .wrap{
+    max-width:1400px;
+    margin:0 auto;
+    padding:32px 40px 60px;
+  }
+  header{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:24px;
+    margin-bottom:28px;
+    flex-wrap:wrap;
+  }
+  .title-block h1{
+    font-family:"Baloo 2", sans-serif;
+    font-weight:800;
+    font-size:clamp(28px, 3.2vw, 44px);
+    margin:0 0 6px;
+    color:var(--sky-deep);
+    letter-spacing:0.5px;
+  }
+  .title-block p{
+    margin:0;
+    color:var(--ink-soft);
+    font-size:16px;
+    font-weight:500;
+  }
+  .flags{
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+  .flag{
+    font-family:"Baloo 2", sans-serif;
+    font-weight:700;
+    font-size:14px;
+    padding:7px 14px;
+    border-radius:20px;
+    background:var(--white);
+    border:2px solid var(--line);
+    color:var(--ink-soft);
+  }
+  .flag.big{background:var(--sun);color:var(--ink);border-color:var(--sun);}
+  .flag.small{background:var(--coral);color:var(--white);border-color:var(--coral);}
+
+  /* week tabs */
+  .weeks{
+    display:flex;
+    gap:12px;
+    margin-bottom:28px;
+    flex-wrap:wrap;
+  }
+  .week-tab{
+    font-family:"Baloo 2", sans-serif;
+    font-weight:700;
+    font-size:20px;
+    padding:14px 26px;
+    border-radius:16px;
+    border:3px solid var(--sky);
+    background:var(--white);
+    color:var(--sky-deep);
+    cursor:pointer;
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease, color .12s ease;
+    box-shadow:0 3px 0 rgba(27,94,122,0.15);
+  }
+  .week-tab .sub{
+    display:block;
+    font-family:"Noto Sans TC", sans-serif;
+    font-weight:500;
+    font-size:12px;
+    margin-top:2px;
+    opacity:0.75;
+  }
+  .week-tab:hover{transform:translateY(-2px);}
+  .week-tab.active{
+    background:var(--sky);
+    color:var(--white);
+    box-shadow:0 4px 0 var(--sky-deep);
+  }
+
+  /* content */
+  .groups{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:28px;
+  }
+  @media (max-width: 860px){
+    .groups{grid-template-columns:1fr;}
+  }
+  .group-panel{
+    background:var(--white);
+    border-radius:22px;
+    padding:22px 22px 10px;
+    border:2px solid var(--line);
+  }
+  .group-panel.big-kids{border-top:8px solid var(--grass);}
+  .group-panel.small-kids{border-top:8px solid var(--coral);}
+  .group-header{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .group-header .dot{
+    width:14px;height:14px;border-radius:50%;
+  }
+  .big-kids .dot{background:var(--grass);}
+  .small-kids .dot{background:var(--coral);}
+  .group-header h2{
+    font-family:"Baloo 2", sans-serif;
+    font-size:22px;
+    margin:0;
+    font-weight:700;
+  }
+
+  .item{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:16px 10px;
+    border-bottom:1px solid var(--line);
+  }
+  .item:last-child{border-bottom:none;}
+  .item-num{
+    font-family:"Baloo 2", sans-serif;
+    font-weight:800;
+    font-size:22px;
+    width:34px;
+    text-align:center;
+    color:var(--ink-soft);
+    flex-shrink:0;
+  }
+  .item-name{
+    flex:1;
+    font-size:18px;
+    font-weight:500;
+    line-height:1.4;
+  }
+  .item-badge{
+    font-size:11px;
+    font-weight:700;
+    padding:3px 8px;
+    border-radius:8px;
+    background:#EEF1F4;
+    color:var(--ink-soft);
+    margin-left:6px;
+    vertical-align:middle;
+  }
+  .play-btn{
+    font-family:"Baloo 2", sans-serif;
+    font-weight:700;
+    font-size:16px;
+    color:var(--white);
+    background:var(--sky);
+    border:none;
+    border-radius:14px;
+    padding:12px 22px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    box-shadow:0 3px 0 var(--sky-deep);
+    transition:transform .1s ease;
+    flex-shrink:0;
+  }
+  .play-btn:hover{transform:translateY(-1px);}
+  .play-btn:active{transform:translateY(2px); box-shadow:none;}
+  .play-btn.played{
+    background:var(--grass-pale);
+    color:var(--grass);
+    box-shadow:none;
+    border:2px solid var(--grass);
+  }
+  .play-btn.disabled{
+    background:#F0F0EC;
+    color:#B7B2A3;
+    box-shadow:none;
+    cursor:not-allowed;
+  }
+  .play-icon{width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-left:11px solid currentColor;}
+  .check-icon{font-size:14px;}
+
+  footer{
+    margin-top:30px;
+    text-align:center;
+    color:var(--ink-soft);
+    font-size:13px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="title-block">
+      <h1>孩要來遊戲影片 (2026年11月)</h1>
+      <p>投影播放版・點週次選單，再點「播放」直接開影片</p>
+    </div>
+    <div class="flags">
+      <span class="flag big">● 大孩</span>
+      <span class="flag small">● 小孩</span>
+    </div>
+  </header>
+
+  <div class="weeks" id="weekTabs"></div>
+  <div class="groups" id="groupPanels"></div>
+
+  <footer>播放後會在新分頁開啟影片，關閉分頁即可回到這個清單繼續播下一支・影片為 Instagram 連結，若跳出登入提示可先關閉或登入後再看</footer>
+</div>
+
+<script>
+const DATA = [
+  { date:"11/1", label:"第1週", items:{
+    big:[
+      {name:"找地標猜拳", link:"https://www.instagram.com/p/DehL47ppzlS/"},
+      {name:"丟骰子採點", link:"https://www.instagram.com/p/De3iuf0ubxl/"},
+    ],
+    small:[
+      {name:"數到三單腳站立", link:"https://www.instagram.com/reel/DeFGK4KK0I8/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="},
+      {name:"在圈圈裡面跑步接力", link:"https://www.instagram.com/reel/Dd3JmVsBPxX/?utm_source=ig_web_copy_link&stkn=MzRlODBiNWFlZA=="},
+    ],
+  }},
+  { date:"11/8", label:"第2週", items:{
+    big:[
+      {name:"滾球進圈", link:"https://www.instagram.com/p/De-NT25PTvD/"},
+      {name:"傳小球接力", link:"https://www.instagram.com/p/DeZsU30ITkh/"},
+    ],
+    small:[
+      {name:"煙囪丟球", link:"https://www.instagram.com/p/DevYhG9B1gH/"},
+      {name:"報紙傳球接力", link:"https://www.instagram.com/p/DeyhT2TSiFf/"},
+    ],
+  }},
+  { date:"11/15", label:"第3週", items:{
+    big:[
+      {name:"丟骰子鬼抓人（1人當鬼，根據丟骰子擲到的數字，要在30秒內抓到該數字的人數）", link:null},
+      {name:"長桿轉圈接力", link:"https://www.instagram.com/p/DeGHqxoCvvq/"},
+    ],
+    small:[
+      {name:"紅藍紙片丟球", link:"https://www.instagram.com/p/De0HnFXzNi1/"},
+      {name:"撈球接力", link:"https://www.instagram.com/p/DesXxVlRRle/"},
+    ],
+  }},
+  { date:"11/22", label:"第4週", items:{
+    big:[
+      {name:"轉圈鬼抓人", link:"https://www.instagram.com/p/DfA5c3LylHV/"},
+      {name:"拍氣球接力", link:"https://www.instagram.com/p/Dd5gyqVyqVM/"},
+    ],
+    small:[
+      {name:"請你跟我這樣做", link:"https://www.instagram.com/p/DdG2qo3o9Ip/"},
+      {name:"過呼拉圈接力", link:"https://www.instagram.com/p/De_MgNmRYwD/"},
+    ],
+  }},
+  { date:"11/29", label:"第5週", items:{
+    big:[
+      {name:"過河抓人", link:"https://www.instagram.com/p/Dd01HIuTvub/"},
+      {name:"猜拳拿地標", link:"https://www.instagram.com/p/DeknhLmhTXa/"},
+    ],
+    small:[
+      {name:"翻巧拼", link:null},
+      {name:"擦地板接力", link:"https://www.instagram.com/p/De6CeFlR4tN/"},
+    ],
+  }},
+];
+
+let activeIdx = 0;
+const played = new Set(); // keys "weekIdx-group-itemIdx"
+
+function renderTabs(){
+  const el = document.getElementById('weekTabs');
+  el.innerHTML = '';
+  DATA.forEach((w, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'week-tab' + (i === activeIdx ? ' active' : '');
+    btn.innerHTML = `${w.date}<span class="sub">${w.label}</span>`;
+    btn.onclick = () => { activeIdx = i; renderTabs(); renderPanels(); };
+    el.appendChild(btn);
+  });
+}
+
+function makeGroupPanel(groupKey, groupLabel, cssClass){
+  const panel = document.createElement('div');
+  panel.className = 'group-panel ' + cssClass;
+  const header = document.createElement('div');
+  header.className = 'group-header';
+  header.innerHTML = `<span class="dot"></span><h2>${groupLabel}</h2>`;
+  panel.appendChild(header);
+
+  const week = DATA[activeIdx];
+  week.items[groupKey].forEach((item, idx) => {
+    const key = `${activeIdx}-${groupKey}-${idx}`;
+    const row = document.createElement('div');
+    row.className = 'item';
+
+    const num = document.createElement('div');
+    num.className = 'item-num';
+    num.textContent = idx + 1;
+    row.appendChild(num);
+
+    const name = document.createElement('div');
+    name.className = 'item-name';
+    name.textContent = item.name;
+    if(item.fb){
+      const badge = document.createElement('span');
+      badge.className = 'item-badge';
+      badge.textContent = 'FB';
+      name.appendChild(badge);
+    }
+    row.appendChild(name);
+
+    const btn = document.createElement('button');
+    if(!item.link){
+      btn.className = 'play-btn disabled';
+      btn.textContent = '無影片';
+      btn.disabled = true;
+    } else {
+      const isPlayed = played.has(key);
+      btn.className = 'play-btn' + (isPlayed ? ' played' : '');
+      btn.innerHTML = isPlayed
+        ? `<span class="check-icon">✓</span> 已播放`
+        : `<span class="play-icon"></span> 播放`;
+      btn.onclick = () => {
+        window.open(item.link, '_blank');
+        played.add(key);
+        renderPanels();
+      };
+    }
+    row.appendChild(btn);
+    panel.appendChild(row);
+  });
+
+  return panel;
+}
+
+function renderPanels(){
+  const el = document.getElementById('groupPanels');
+  el.innerHTML = '';
+  el.appendChild(makeGroupPanel('big', '大孩', 'big-kids'));
+  el.appendChild(makeGroupPanel('small', '小孩', 'small-kids'));
+}
+
+renderTabs();
+renderPanels();
+</script>
+</body>
+</html>
